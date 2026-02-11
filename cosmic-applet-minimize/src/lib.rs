@@ -240,6 +240,9 @@ impl cosmic::Application for Minimize {
                 if let Some(tx) = self.tx.as_ref() {
                     let _ = tx.send(WaylandRequest::Toplevel(ToplevelRequest::Activate(handle)));
                 }
+                return cosmic::task::message(cosmic::Action::Cosmic(
+                    cosmic::app::Action::Surface(surface::Action::DestroyTooltipPopup),
+                ));
             }
             Message::Closed(id) => {
                 if self.overflow_popup.is_some_and(|i| i == id) {
